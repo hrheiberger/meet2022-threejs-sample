@@ -1,0 +1,50 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body
+{
+    height: 100vh;
+    font-family: 'Poppins';
+    background-color: rgb(24,24,24);
+    color: white;
+}
+
+body{
+    overflow-x: hidden;
+}
+
+.row{
+    position: relative;
+    z-index: 1;
+}
+
+#homeCanvas
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    outline: none;
+    mix-blend-mode: screen;
+}
+
+.container {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+h1{
+    font-size: 8em;
+    text-transform: uppercase;
+    color: white;
+}
+
+btn{
+    position: absolute;
+    display: block;
+}
+section{height:100vh}
