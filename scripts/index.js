@@ -10,7 +10,7 @@ const textureLoader = new THREE.TextureLoader();
 const moonMap = textureLoader.load(`./static/textures/moon.jpg`);
 const particle = textureLoader.load(`./static/images/particle.png`);
 
-//Resize canvas on window resize
+//Resize background Canvas on window resize
 window.addEventListener('resize', () =>
 {
     // Update camera
@@ -26,7 +26,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.z = 2;
 
-//Create Moon
+//Create central moon
 const geometry = new THREE.SphereBufferGeometry(0.5, 64, 64);
 const material = new THREE.MeshStandardMaterial( { 
     metalness: 0.9,
@@ -49,7 +49,7 @@ const pointLightBlue = new THREE.PointLight(0x96ff, 10);
 pointLightBlue.position.set(1.6,-1.52,-1.6);
 scene.add(pointLightBlue);
 
-//Setup Mouse Interactivity
+//Record mouse position
 const windowHalfX = window.innerWidth / 2;
 const windowHalfY = window.innerHeight / 2;
 let mouseX = 0;
@@ -64,7 +64,8 @@ function onDocumentMouseMove(event){
 }
 document.addEventListener("mousemove", onDocumentMouseMove)
 
-//Setup Scroll Interactivity
+//Example Scroll Interactivity
+//  Moves central moon during scroll
 const updateSphere = (event) => {
     shape.position.y = -window.scrollY*0.001;
 
@@ -72,7 +73,7 @@ const updateSphere = (event) => {
 window.addEventListener("scroll", updateSphere)
 
 
-//Generate Star Background
+//Generate Star Background particle system
 function getParticleBuffer(particleCount){
     const pos = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
@@ -93,18 +94,18 @@ const particleMaterial = new THREE.PointsMaterial({
 const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
 scene.add(particleSystem);
 
-//Setup Animation
+//Animate background
 const clock = new THREE.Clock();
 const animate = function () {
     // Determine frametime
     const elapsedTime = clock.getDelta();
 
-    // Natural Rotation
+    // Provide Natural Rotation
     shape.rotation.y += 0.1 * elapsedTime;
     particleSystem.rotation.y -= 0.1 * elapsedTime;
 
     
-    // Update from Interaction
+    // Provided additional mouse rotation
     targetX = mouseX * 0.001;
     targetY = mouseY * 0.001;
     const deltaY = (Math.abs(targetY - lastTargetY) < 0.1) ? (targetY - lastTargetY): 0;
@@ -114,8 +115,6 @@ const animate = function () {
     shape.rotation.y += 50*elapsedTime*deltaX;
     shape.rotation.y %= 360;
     shape.position.z += 10*elapsedTime*deltaY;
-    //shape.position.z += -5*elapsedTime*(targetY - shape.rotation.x);
-;
 
     // Render
     renderer.render(scene, camera);

@@ -67,7 +67,12 @@ const uploadButton = document.getElementById("uploadFlashcards");
 const uploadInput = document.getElementById("flashCardUpload");
 const downloadButton = document.getElementById("downloadFlashcards");
 
-// Refresh
+/**
+ * Refreshes the current flashcard displayed to the client
+ * 
+ * If no flashcards are found, the client is notified
+ * Otherwise displays flashcard at "currentIndex"
+ */
 function refreshFlashcards(){
     if (Flashcard.existingCards.length === 0){
         cardType.textContent = "No Flashcards Found";
@@ -87,8 +92,14 @@ function refreshFlashcards(){
 }
 refreshFlashcards();
 
-// Adds new flashcard into existingCards
-function addFlashcard(event){
+/**
+ * Adds a new flashcard to Flashcard.existingCards
+ *   The front of the card contains the text 
+ *      provided in the first input of "Add Flashcard"
+ *   The back of the car contains the text 
+ *      provided in the second input of "Add Flashcard"
+ */
+function addFlashcard(){
     const word = wordInput.value;
     wordInput.value = "";
     const definition = definitionInput.value;
@@ -100,8 +111,12 @@ function addFlashcard(event){
 }
 addButton.addEventListener("click", addFlashcard);
 
-// Flips the current flashcard
-function flipCard(event){
+/**
+ * Flips the current flashcard
+ * 
+ * If no flashcards are currently added, nothing happens
+ */
+function flipCard(){
     if (Flashcard.existingCards.length === 0){
         return;
     }
@@ -119,8 +134,12 @@ function flipCard(event){
 }
 flipButton.addEventListener("click", flipCard);
 
-// Deletes the current flashcard
-function deleteCard(event){
+/**
+ * Deletes the currentFlashcard from the system
+ * 
+ * If no flashcards are currently added, nothing happens
+ */
+function deleteCard(){
     Flashcard.existingCards.splice(currentIndex, 1);
     if (Flashcard.existingCards.length !== 0){
     currentIndex %= Flashcard.existingCards.length;
@@ -133,7 +152,12 @@ function deleteCard(event){
 }
 deleteButton.addEventListener("click", deleteCard);
 
-// Advances to the next flashcard
+/**
+ * Advances to the next flashcard contained in Flashcard.existingCards
+ *  
+ * If the current flashcard is the last flashcard, the first flashcard is displayed
+ * If no flashcards are currently added, nothing happens
+ */
 function nextCard(event){
     if (Flashcard.existingCards.length === 0){
         return;
@@ -151,7 +175,12 @@ function nextCard(event){
 }
 nextButton.addEventListener("click", nextCard);
 
-// Advances to the previous flashcard
+/**
+ * Advances to the previous flashcard contained in Flashcard.existingCards
+ *  
+ * If the current flashcard is the first flashcard, the last flashcard is displayed
+ * If no flashcards are currently added, nothing happens
+ */
 function lastCard(event){
     if (Flashcard.existingCards.length === 0){
         return;
@@ -174,8 +203,13 @@ function lastCard(event){
 }
 lastButton.addEventListener("click", lastCard);
 
-// Download current flashcards
-function downloadCards(event){
+/**
+ * Downloads the currently stored flashcards as a JSON object
+ * 
+ * The JSON object is formatted as an array of objects
+ *   with front, back, and isFlipped attributes
+ */
+function downloadCards(){
     const jsonCards = [JSON.stringify(Flashcard.existingCards)];
     const blobCards = new Blob(jsonCards, { type: "text/plain;charset=utf-8" });
 
@@ -196,8 +230,16 @@ function downloadCards(event){
 }
 downloadButton.addEventListener("click", downloadCards);
 
-//Load New Flashcards
-function uploadCards(event){
+/**
+ * Loads the flashcards contained in the file provided
+ *   in the "Upload Flashcards" input field
+ * 
+ * The uploaded text file must be formatted as a JSON object
+ *   containing an array of objects with "front" and "back" fields
+ *
+ * The user is notified if the provided file is in an incorrect format
+ */
+function uploadCards(){
     const files = uploadInput.files;
     if (files.length <= 0){
         return;
