@@ -69,7 +69,6 @@ const downloadButton = document.getElementById("downloadFlashcards");
 
 // Refresh
 function refreshFlashcards(){
-    console.log(currentIndex);
     if (Flashcard.existingCards.length === 0){
         cardType.textContent = "No Flashcards Found";
         cardContent.textContent = "Use the below tools to add new cards!";
@@ -77,15 +76,14 @@ function refreshFlashcards(){
     else{
         const currentCard = Flashcard.existingCards[currentIndex];
         if (currentCard.isFlipped){
-            cardType.textContent = "Definition";
+            cardType.textContent = "Back";
             cardContent.textContent = currentCard.back;
         }
         else{
-            cardType.textContent = "Word";
+            cardType.textContent = "Front";
             cardContent.textContent = currentCard.front;
         }
     }
-    console.log(JSON.parse(JSON.stringify(Flashcard.existingCards)));
 }
 refreshFlashcards();
 
@@ -110,12 +108,12 @@ function flipCard(event){
     const currentCard = Flashcard.existingCards[currentIndex];
     if (!currentCard.isFlipped){
         currentCard.isFlipped = true;
-        cardType.textContent = "Definition";
+        cardType.textContent = "Back";
         cardContent.textContent = currentCard.back;
     }
     else{
         currentCard.isFlipped = false;
-        cardType.textContent = "Word";
+        cardType.textContent = "Front";
         cardContent.textContent = currentCard.front;
     }
 }
@@ -220,7 +218,6 @@ function uploadCards(event){
             refreshFlashcards();
         }
         catch (error) {
-            console.log(error);
             cardType.textContent = "Upload Failed";
             cardContent.textContent = "Please try uploading again or use the Add Flashcard tool to add cards";
             Flashcard.existingCards = oldCards;
