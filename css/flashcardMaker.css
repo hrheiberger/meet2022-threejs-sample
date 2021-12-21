@@ -22,7 +22,15 @@ body{
     z-index: 1;
 }
 
-#homeCanvas
+.btn{
+    margin: 2%;
+}
+
+input{
+    text-align-last: center;
+}
+
+#backgroundCanvas
 {
     position: absolute;
     top: 0;
@@ -30,22 +38,3 @@ body{
     outline: none;
     mix-blend-mode: screen;
 }
-
-.container {
-    height: 100vh;
-    display: grid;
-    place-items: center;
-}
-
-h1{
-    font-size: 8em;
-    text-transform: uppercase;
-    color: white;
-}
-
-
-btn{
-    position: absolute;
-    display: block;
-}
-section{height:100vh}

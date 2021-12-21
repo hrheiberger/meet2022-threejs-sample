@@ -76,12 +76,12 @@ window.addEventListener("scroll", updateSphere)
 function getParticleBuffer(particleCount){
     const pos = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount; i++) {
-      pos[i] = THREE.MathUtils.randFloatSpread(10);
+      pos[i] = THREE.MathUtils.randFloatSpread(15);
     }
     return pos;
 };
 const particleGeometry = new THREE.BufferGeometry();
-particleGeometry.setAttribute("position", new THREE.BufferAttribute(getParticleBuffer(2000),3));
+particleGeometry.setAttribute("position", new THREE.BufferAttribute(getParticleBuffer(10000),3));
 const particleMaterial = new THREE.PointsMaterial({
     color: 0xFFFFFF,
     size: 0.15,
